@@ -1,9 +1,16 @@
 import '../common/lib';
-import AsideMenu from '../component/AsideMenu';
 import MainContent from '../component/MainContent';
 import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import React from 'react';
 
-ReactDOM.render(<AsideMenu />, document.getElementById('aside-menu'));
+import { Router, Route, Link, hashHistory } from 'react-router'
 
-ReactDOM.render(<MainContent />, document.getElementById('main-content'));
+
+render((
+  <Router history={hashHistory}>
+    <Route path="/" component={MainContent}>
+      <Route path="*" component={MainContent}/>
+    </Route>
+  </Router>
+), document.getElementById("main"))

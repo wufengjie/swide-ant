@@ -5,7 +5,6 @@ const SubMenu = Menu.SubMenu;
 
 const AsideMenu = React.createClass({
   handleClick(e){
-    renderIndex();
   },
 
   render(){
