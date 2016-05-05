@@ -1,12 +1,12 @@
 import React from 'react';
 import {Menu, Breadcrumb, Icon} from 'antd';
 const SubMenu = Menu.SubMenu;
-import Header from './Header';
-import AsideMenu from './AsideMenu';
-import MeInfoForm from './MeInfoForm';
-import './MainContent.less';
+import Header from '../component/Header';
+import AsideMenu from '../component/AsideMenu';
+import WebsiteAddForm from './WebsiteAddForm';
 
-const MainContent = () =>
+
+const WebsiteAdd = () =>
   <div className="main-content">
       <AsideMenu />
       <div className="ant-layout-main">
@@ -23,7 +23,8 @@ const MainContent = () =>
                   <div style={{
                       minHeight: 590
                   }}>
-                      <MeInfoForm/>
+                  wwwwwww
+                      <WebsiteAddForm />
                   </div>
               </div>
           </div>
@@ -33,4 +34,4 @@ const MainContent = () =>
       </div>
   </div>;
 
-export default MainContent;
+export default WebsiteAdd;

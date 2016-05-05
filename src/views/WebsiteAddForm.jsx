@@ -1,15 +1,12 @@
 
 import React from "React";
 import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon } from 'antd';
-
-import './MeInfoForm.less';
-
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
 
-let MeInfoForm = React.createClass({
+let WebsiteAddForm = React.createClass({
   componentDidMount() {
     this.props.form.setFieldsValue({
       eat: true,
@@ -199,6 +196,6 @@ let MeInfoForm = React.createClass({
   },
 });
 
-MeInfoForm = createForm()(MeInfoForm);
+WebsiteAddForm = createForm()(WebsiteAddForm);
 
-export default MeInfoForm;
+export default WebsiteAddForm;
