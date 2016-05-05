@@ -4,6 +4,7 @@ import React from 'react';
 import AsideMenu from './AsideMenu';
 import Footer from './Footer';
 import Header from './Header';
+import { connect } from 'react-redux';
 
 const App = React.createClass({
   render(){
@@ -27,4 +28,10 @@ const App = React.createClass({
   }
 })
 
-export default App;
+function select(state){
+    return {
+        data: state
+    }
+}
+
+export default connect(select)(App);

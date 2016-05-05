@@ -5,14 +5,31 @@ const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
+import { connect } from 'react-redux';
 
 let UserinfoForm = React.createClass({
+  getInitialState(){
+    return {
+      datestr: '1990-01-01'
+    }
+  },
+
   componentDidMount() {
     this.props.form.setFieldsValue({
       eat: true,
       sleep: true,
-      beat: true,
+      beat: true
     });
+    
+    fetch('http://127.0.0.1:9002/api/me/status', {credentials: 'include'}).then((data) => {
+      data.json().then((data) => {
+        this.setState(data.result.other);
+      }, function(err){
+        console.log(err)
+      })
+    }, function(err){
+      
+    })
   },
 
   handleReset(e) {
@@ -22,14 +39,39 @@ let UserinfoForm = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((errors, values) => {
-      if (!!errors) {
-        console.log('Errors in form!!!');
-        return;
+    var obj = this.props.form.getFieldsValue();
+    var form = [];
+    Object.keys(obj).forEach(function(key){
+      if(typeof obj[key] !== 'undefined'){
+        form.push(key + '=' + obj[key])
+        //form.append(key, obj[key]);
       }
-      console.log('Submit!!!');
-      console.log(values);
-    });
+      
+    })
+    
+    fetch('http://127.0.0.1:9002/api/me/user/modify', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: form.join('&')
+    }).then(function(data){
+      data.json().then(function(result){
+        console.log(result)
+      }, function(err){
+        console.log(err)
+      })
+    }, function(){})
+    // this.props.form.validateFieldsAndScroll((errors, values) => {
+    //   if (!!errors) {
+    //     console.log(errors);
+    //     console.log('Errors in form!!!');
+    //     return;
+    //   }
+    //   console.log('Submit!!!');
+    //   console.log(values);
+    // });
   },
 
   checkBirthday(rule, value, callback) {
@@ -47,17 +89,28 @@ let UserinfoForm = React.createClass({
       callback();
     }
   },
+  
+  dateChange(date){
+    var d = new Date(date);
+    var str = [d.getFullYear(), ('0' + (d.getMonth()+1)).slice(-2), ('0' + d.getDate()).slice(-2)].join('-');
+
+    this.setState({
+      datestr: str
+    });
+  },
 
   render() {
+    const dispatch = this.props.dispatch;
     const address = [{
       value: 'zhejiang',
       label: '浙江',
       children: [{
         value: 'hangzhou',
-        label: '杭州',
+        label: '杭州'
       }],
     }];
     const { getFieldProps } = this.props.form;
+    
     const uploadProps = {
       action: '/upload.do',
       listType: 'picture-card',
@@ -69,31 +122,39 @@ let UserinfoForm = React.createClass({
         thumbUrl: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
       }]
     };
-    const usernameProps = getFieldProps('input',{
+    const usernameProps = getFieldProps('user_realname',{
       rules: [
         { required: true, message: '真实姓名还是需要的' }
       ],
+      initialValue: this.state.user_realname
     })
-    const selectProps = getFieldProps('select', {
+
+    const nicknameProps = getFieldProps('user_nick',{
       rules: [
-        { required: true, message: '请选择您的国籍' }
+        { required: true, message: '昵称还是需要的' }
       ],
-    });
-    const multiSelectProps = getFieldProps('multiSelect', {
-      rules: [
-        { required: true, message: '请选择您喜欢的颜色', type: 'array' },
-      ]
-    });
+      initialValue: this.state.user_nick
+    })
+    // const selectProps = getFieldProps('select', {
+    //   rules: [
+    //     { required: true, message: '请选择您的国籍' }
+    //   ],
+    // });
+    // const multiSelectProps = getFieldProps('multiSelect', {
+    //   rules: [
+    //     { required: true, message: '请选择您喜欢的颜色', type: 'array' },
+    //   ]
+    // });
     const radioProps = getFieldProps('radio', {
       rules: [
         { required: true, message: '你不会是其他性别吧？' }
       ]
     });
     const birthdayProps = getFieldProps('birthday', {
-
+    
       rules: [
         {
-          required: true,
+          required: false,
           type: 'date',
           message: '你的生日是什么呢?'
         }, {
@@ -101,26 +162,33 @@ let UserinfoForm = React.createClass({
         }
       ]
     });
-    const primeNumberProps = getFieldProps('primeNumber', {
-      rules: [{ validator: this.checkPrime }],
-    });
-    const addressProps = getFieldProps('address', {
+    // const primeNumberProps = getFieldProps('primeNumber', {
+    //   rules: [{ validator: this.checkPrime }],
+    // });
+    const addressProps = getFieldProps('user_address2', {
       rules: [{ required: true, type: 'array',message:'你不可能来自氪星吧？' }],
     });
-    const signatureProps = getFieldProps('textarea' ,{
+    const signatureProps = getFieldProps('user_signature' ,{
       rules: [{ required: true,message:'真的不打算说点什么吗？' }],
+      initialValue: this.state.user_address
     })
-    const fulladdressProps = getFieldProps('fulladdress' ,{
+    const fulladdressProps = getFieldProps('user_address' ,{
       rules: [{ required: false,message:'地址还是填一个吧？' }],
+      initialValue: this.state.user_address
+    })
+    const zipcodeProps = getFieldProps('user_zipcode' ,{
+      rules: [{ required: false }],
+      initialValue: this.state.user_address
     })
     const formItemLayout = {
       labelCol: { span: 7 },
-      wrapperCol: { span: 12 },
+      wrapperCol: { span: 12 }
     };
+    
     return (
 
 
-      <Form horizontal form={this.props.form}>
+      <Form horizontal>
         <FormItem {...formItemLayout} label=" ">
           <Upload {...uploadProps} >
             <Icon type="plus" className="me-upload-icon"/>
@@ -131,12 +199,12 @@ let UserinfoForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="用户名：">
-          <p className="ant-form-text" id="userName" name="userName">wufengjie9@163.com</p>
+          <p className="ant-form-text" id="userName" name="userName">{this.state.user_mail}</p>
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="昵称：">
-           <Input type="text" placeholder="昵称" />
+           <Input {...nicknameProps} type="text" placeholder="昵称" />
         </FormItem>
 
         <FormItem
@@ -163,7 +231,7 @@ let UserinfoForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="生日：">
-          <DatePicker {...birthdayProps}  value="1990-01-01"/>
+          <DatePicker {...birthdayProps} onChange={this.dateChange} value={this.state.datestr} defaultValue={this.state.datestr} format="yyyy-MM-dd"/>
         </FormItem>
 
         <FormItem
@@ -174,7 +242,7 @@ let UserinfoForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="邮编：">
-           <Input type="text" placeholder="邮编" />
+           <Input {...zipcodeProps} type="text" placeholder="邮编" />
         </FormItem>
 
         <FormItem
@@ -198,4 +266,10 @@ let UserinfoForm = React.createClass({
 
 UserinfoForm = createForm()(UserinfoForm);
 
-export default UserinfoForm;
+function select(state){
+  return {
+    data: state
+  }
+}
+
+export default connect(select)(UserinfoForm);

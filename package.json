@@ -10,9 +10,15 @@
     "atool-build": "0.6.x",
     "babel-plugin-antd": "0.3.x",
     "es3ify-loader": "^0.1.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
     "react": "0.14.x",
     "react-dom": "0.14.x",
-    "react-router": "^2.4.0"
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.0",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.0.1",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "dora": "0.3.x",
