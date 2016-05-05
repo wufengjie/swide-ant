@@ -11,7 +11,8 @@
     "babel-plugin-antd": "0.3.x",
     "es3ify-loader": "^0.1.0",
     "react": "0.14.x",
-    "react-dom": "0.14.x"
+    "react-dom": "0.14.x",
+    "react-router": "^2.4.0"
   },
   "devDependencies": {
     "dora": "0.3.x",
@@ -25,9 +26,6 @@
     "pre-commit": "1.x",
     "babel-eslint": "^6.0.0"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "scripts": {
     "start": "npm run dev",
     "dev": "dora -p 8001 --plugins webpack,hmr,proxy,livereload?enableJs=false",
