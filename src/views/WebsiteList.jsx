@@ -12,6 +12,13 @@ let WebsiteAddForm = React.createClass({
       hashchecked: false
     };
   },
+  componentDidMount() {
+    this.props.form.setFieldsValue({
+      eat: true,
+      sleep: true,
+      beat: true,
+    });
+  },
 
   hashCheck() {
     this.setState({ hashchecked: true });
@@ -24,10 +31,31 @@ let WebsiteAddForm = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
+    this.props.form.validateFieldsAndScroll((errors, values) => {
+      if (!!errors) {
+        console.log('Errors in form!!!');
+        return;
+      }
       console.log('Submit!!!');
       console.log(values);
+    });
   },
 
+  checkBirthday(rule, value, callback) {
+    if (value && value.getTime() >= Date.now()) {
+      callback(new Error('你不可能在未来出生吧!'));
+    } else {
+      callback();
+    }
+  },
+
+  checkPrime(rule, value, callback) {
+    if (value !== 11) {
+      callback(new Error('8~12之间的质数明明是11啊!'));
+    } else {
+      callback();
+    }
+  },
 
   render() {
     const address = [{
@@ -39,6 +67,61 @@ let WebsiteAddForm = React.createClass({
       }],
     }];
     const { getFieldProps } = this.props.form;
+    const uploadProps = {
+      action: '/upload.do',
+      listType: 'picture-card',
+      defaultFileList: [{
+        uid: -1,
+        name: 'xxx.png',
+        status: 'done',
+        url: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+        thumbUrl: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+      }]
+    };
+    const usernameProps = getFieldProps('input',{
+      rules: [
+        { required: true, message: '真实姓名还是需要的' }
+      ],
+    })
+    const selectProps = getFieldProps('select', {
+      rules: [
+        { required: true, message: '请选择您的国籍' }
+      ],
+    });
+    const multiSelectProps = getFieldProps('multiSelect', {
+      rules: [
+        { required: true, message: '请选择您喜欢的颜色', type: 'array' },
+      ]
+    });
+    const radioProps = getFieldProps('radio', {
+      rules: [
+        { required: true, message: '你不会是其他性别吧？' }
+      ]
+    });
+    const birthdayProps = getFieldProps('birthday', {
+
+      rules: [
+        {
+          required: true,
+          type: 'date',
+          message: '你的生日是什么呢?'
+        }, {
+          validator: this.checkBirthday,
+        }
+      ]
+    });
+    const primeNumberProps = getFieldProps('primeNumber', {
+      rules: [{ validator: this.checkPrime }],
+    });
+    const addressProps = getFieldProps('address', {
+      rules: [{ required: true, type: 'array',message:'你不可能来自氪星吧？' }],
+    });
+    const signatureProps = getFieldProps('textarea' ,{
+      rules: [{ required: true,message:'真的不打算说点什么吗？' }],
+    })
+    const fulladdressProps = getFieldProps('fulladdress' ,{
+      rules: [{ required: false,message:'地址还是填一个吧？' }],
+    })
     const formItemLayout = {
       labelCol: { span: 7 },
       wrapperCol: { span: 12 },
@@ -57,7 +140,7 @@ let WebsiteAddForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="网站域名：">
-          <Input  type="text" placeholder="请输入你的网站域名" />
+          <Input {...usernameProps} type="text" placeholder="请输入你的网站域名" />
         </FormItem>
 
         <FormItem
@@ -90,7 +173,7 @@ let WebsiteAddForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="网站描述：">
-          <Input type="textarea" placeholder="随便写" id="textarea" name="textarea" />
+          <Input {...signatureProps} type="textarea" placeholder="随便写" id="textarea" name="textarea" />
         </FormItem>
 
         <FormItem
