@@ -4,7 +4,7 @@ import React from 'react';
 
 const Header = React.createClass({
   render(){
-    return (<div className="ant-layout-header"></div>);
+    return (<div className="ant-layout-header">资料修改</div>);
   }
 })
 

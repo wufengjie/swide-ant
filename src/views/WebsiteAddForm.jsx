@@ -1,18 +1,27 @@
 
 import React from "React";
-import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon } from 'antd';
+import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon ,Alert} from 'antd';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
 
 let WebsiteAddForm = React.createClass({
+  getInitialState() {
+    return {
+      hashchecked: false
+    };
+  },
   componentDidMount() {
     this.props.form.setFieldsValue({
       eat: true,
       sleep: true,
       beat: true,
     });
+  },
+
+  hashCheck() {
+    this.setState({ hashchecked: true });
   },
 
   handleReset(e) {
@@ -117,73 +126,55 @@ let WebsiteAddForm = React.createClass({
       labelCol: { span: 7 },
       wrapperCol: { span: 12 },
     };
+
+
+
     return (
-
-
       <Form horizontal form={this.props.form}>
-        <FormItem {...formItemLayout} label=" ">
-          <Upload {...uploadProps} >
-            <Icon type="plus" className="me-upload-icon"/>
-            <div className="ant-upload-text">上传头像</div>
-          </Upload>
+        <FormItem
+          {...formItemLayout}
+          label="网站名称：">
+           <Input type="text" placeholder="网站名称" />
         </FormItem>
 
         <FormItem
           {...formItemLayout}
-          label="用户名：">
-          <p className="ant-form-text" id="userName" name="userName">wufengjie9@163.com</p>
+          label="网站域名：">
+          <Input {...usernameProps} type="text" placeholder="请输入你的网站域名" />
         </FormItem>
+
         <FormItem
-          {...formItemLayout}
-          label="昵称：">
-           <Input type="text" placeholder="昵称" />
+          wrapperCol={{ span: 12, offset: 7 }} >
+          <Alert message="域名验证提示:"
+              description="请将下面的hash代码保存到指定网址到文件后点击验证来确认是否能够与平台相连接。"
+              type="info"
+              showIcon />
+
+
         </FormItem>
 
         <FormItem
           {...formItemLayout}
-          label="真实姓名：">
-          <Input {...usernameProps} type="text" placeholder="请输入你的真实姓名" />
+          label="验证地址：">
+          <a href="http://www/rootbat.txt" target="_blank">http://www/rootbat.txt</a>
         </FormItem>
 
         <FormItem
           {...formItemLayout}
-          label="性别：">
-          <RadioGroup {...radioProps}>
-            <Radio value="male">男</Radio>
-            <Radio value="female">女</Radio>
-          </RadioGroup>
+          label="HashCode：">
+          <code>04b77005dba997c3242e726d8a62d950ba1f2544</code>
+          <div>
+            <Button type="ghost" loading={this.state.hashchecked} onClick={this.hashCheck}>
+              <Icon type="check" /> 去验证
+          </Button>
+          </div>
         </FormItem>
 
         <FormItem
           {...formItemLayout}
-          label="签名：">
+          label="网站描述：">
           <Input {...signatureProps} type="textarea" placeholder="随便写" id="textarea" name="textarea" />
         </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="生日：">
-          <DatePicker {...birthdayProps}  value="1990-01-01"/>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="选择地址：">
-          <Cascader {...addressProps} options={address} />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="邮编：">
-           <Input type="text" placeholder="邮编" />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="详细地址：">
-          <Input {...fulladdressProps} type="textarea" placeholder="请填写你的详细地址" id="fulladdress" name="fulladdress" />
-        </FormItem>
-
-
 
         <FormItem
           wrapperCol={{ span: 12, offset: 7 }} >

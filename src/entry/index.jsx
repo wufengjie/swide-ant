@@ -6,19 +6,20 @@ import React from 'react';
 
 import { Router, Route, Link, hashHistory } from 'react-router'
 import '../css/MainContent.less';
-import Userinfo from '../views/Userinfo';
-import WebsiteAdd from '../views/WebsiteAdd';
+
+import App from '../component/App';
+import UserinfoForm from '../views/UserinfoForm';
+import WebsiteAddForm from '../views/WebsiteAddForm';
 
 
 render((
   <Router history={hashHistory}>
-    <Route path="/" component={Userinfo}>
-      <Route path="user" component={Userinfo} />
-      <Route path="website" component={WebsiteAdd}>
-        <Route path="add" component={WebsiteAdd} />
-        <Route path="list" component={Userinfo} />
+    <Route path="/" component={App}>
+      <Route path="/user" component={UserinfoForm} />
+      <Route path="/website">
+        <Route path="/website/add" component={WebsiteAddForm} />
+        <Route path="/website/list" component={UserinfoForm} />
       </Route>
-      <Route path="*" component={Userinfo}/>
     </Route>
   </Router>
 ), document.getElementById("main"))
