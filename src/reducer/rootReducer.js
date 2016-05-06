@@ -4,7 +4,8 @@ var initState = {
 
 function reducer(state = initState, action){
     return {
-        userInfo: userInfo(state.userInfo, action)
+        userInfo: userInfo(state.userInfo, action),
+        prefix: ''
     }
 }
 

@@ -1,19 +1,20 @@
 
-import React from "React";
+import React from "react";
 import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon } from 'antd';
+import { citys } from '../common/citys';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
 import { connect } from 'react-redux';
+import ThumbUpload from '../component/ThumbUpload/ThumbUpload.jsx';
+
 
 let UserinfoForm = React.createClass({
   getInitialState(){
-    return {
-      datestr: '1990-01-01'
-    }
+    return {};
   },
-
+  
   componentDidMount() {
     this.props.form.setFieldsValue({
       eat: true,
@@ -21,9 +22,12 @@ let UserinfoForm = React.createClass({
       beat: true
     });
     
-    fetch('http://127.0.0.1:9002/api/me/status', {credentials: 'include'}).then((data) => {
+    fetch(this.props.data.prefix + '/api/me/status', {credentials: 'include'}).then((data) => {
       data.json().then((data) => {
         this.setState(data.result.other);
+        this.setState({
+          locate: [data.result.other.user_province, data.result.other.user_city, data.result.other.user_area]
+        })
       }, function(err){
         console.log(err)
       })
@@ -37,19 +41,26 @@ let UserinfoForm = React.createClass({
     this.props.form.resetFields();
   },
 
+  handleThumb(info){
+    console.log(info)
+  },
+
   handleSubmit(e) {
     e.preventDefault();
     var obj = this.props.form.getFieldsValue();
+    
     var form = [];
     Object.keys(obj).forEach(function(key){
       if(typeof obj[key] !== 'undefined'){
-        form.push(key + '=' + obj[key])
-        //form.append(key, obj[key]);
+        form.push(key + '=' + obj[key]);
       }
-      
-    })
+    });
     
-    fetch('http://127.0.0.1:9002/api/me/user/modify', {
+    form.push('user_province' + '=' + this.state.locate[0]);
+    form.push('user_city' + '=' + this.state.locate[1]);
+    form.push('user_area' + '=' + this.state.locate[2]);
+    
+    fetch(this.props.data.prefix + '/api/me/user/modify', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -62,16 +73,7 @@ let UserinfoForm = React.createClass({
       }, function(err){
         console.log(err)
       })
-    }, function(){})
-    // this.props.form.validateFieldsAndScroll((errors, values) => {
-    //   if (!!errors) {
-    //     console.log(errors);
-    //     console.log('Errors in form!!!');
-    //     return;
-    //   }
-    //   console.log('Submit!!!');
-    //   console.log(values);
-    // });
+    }, function(){});
   },
 
   checkBirthday(rule, value, callback) {
@@ -89,31 +91,22 @@ let UserinfoForm = React.createClass({
       callback();
     }
   },
-  
-  dateChange(date){
-    var d = new Date(date);
-    var str = [d.getFullYear(), ('0' + (d.getMonth()+1)).slice(-2), ('0' + d.getDate()).slice(-2)].join('-');
 
+  changeLocate(locate){
     this.setState({
-      datestr: str
-    });
+      locate: locate
+    })
   },
 
   render() {
-    const dispatch = this.props.dispatch;
-    const address = [{
-      value: 'zhejiang',
-      label: '浙江',
-      children: [{
-        value: 'hangzhou',
-        label: '杭州'
-      }],
-    }];
+    let address = citys;
     const { getFieldProps } = this.props.form;
-    
+    console.log(this.props);
+    const defaultLocate = ["110000", "110100", "110101"];
     const uploadProps = {
       action: '/upload.do',
       listType: 'picture-card',
+      onChange: this.handleThumb,
       defaultFileList: [{
         uid: -1,
         name: 'xxx.png',
@@ -135,42 +128,16 @@ let UserinfoForm = React.createClass({
       ],
       initialValue: this.state.user_nick
     })
-    // const selectProps = getFieldProps('select', {
-    //   rules: [
-    //     { required: true, message: '请选择您的国籍' }
-    //   ],
-    // });
-    // const multiSelectProps = getFieldProps('multiSelect', {
-    //   rules: [
-    //     { required: true, message: '请选择您喜欢的颜色', type: 'array' },
-    //   ]
-    // });
-    const radioProps = getFieldProps('radio', {
+    const radioProps = getFieldProps('user_sex', {
       rules: [
         { required: true, message: '你不会是其他性别吧？' }
-      ]
+      ],
+      initialValue: this.state.user_sex
     });
-    const birthdayProps = getFieldProps('birthday', {
-    
-      rules: [
-        {
-          required: false,
-          type: 'date',
-          message: '你的生日是什么呢?'
-        }, {
-          validator: this.checkBirthday,
-        }
-      ]
-    });
-    // const primeNumberProps = getFieldProps('primeNumber', {
-    //   rules: [{ validator: this.checkPrime }],
-    // });
-    const addressProps = getFieldProps('user_address2', {
-      rules: [{ required: true, type: 'array',message:'你不可能来自氪星吧？' }],
-    });
+
     const signatureProps = getFieldProps('user_signature' ,{
       rules: [{ required: true,message:'真的不打算说点什么吗？' }],
-      initialValue: this.state.user_address
+      initialValue: this.state.user_signature
     })
     const fulladdressProps = getFieldProps('user_address' ,{
       rules: [{ required: false,message:'地址还是填一个吧？' }],
@@ -178,7 +145,7 @@ let UserinfoForm = React.createClass({
     })
     const zipcodeProps = getFieldProps('user_zipcode' ,{
       rules: [{ required: false }],
-      initialValue: this.state.user_address
+      initialValue: this.state.user_zipcode
     })
     const formItemLayout = {
       labelCol: { span: 7 },
@@ -189,12 +156,8 @@ let UserinfoForm = React.createClass({
 
 
       <Form horizontal>
-        <FormItem {...formItemLayout} label=" ">
-          <Upload {...uploadProps} >
-            <Icon type="plus" className="me-upload-icon"/>
-            <div className="ant-upload-text">上传头像</div>
-          </Upload>
-        </FormItem>
+        
+        <ThumbUpload thumb={this.state.user_avatar}></ThumbUpload>
 
         <FormItem
           {...formItemLayout}
@@ -217,8 +180,8 @@ let UserinfoForm = React.createClass({
           {...formItemLayout}
           label="性别：">
           <RadioGroup {...radioProps}>
-            <Radio value="male">男</Radio>
-            <Radio value="female">女</Radio>
+            <Radio value="0">男</Radio>
+            <Radio value="1">女</Radio>
           </RadioGroup>
         </FormItem>
 
@@ -230,15 +193,10 @@ let UserinfoForm = React.createClass({
 
         <FormItem
           {...formItemLayout}
-          label="生日：">
-          <DatePicker {...birthdayProps} onChange={this.dateChange} value={this.state.datestr} defaultValue={this.state.datestr} format="yyyy-MM-dd"/>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
           label="选择地址：">
-          <Cascader {...addressProps} options={address} />
+          <Cascader options={address} defaultValue={defaultLocate} value={this.state.locate} onChange={this.changeLocate} />
         </FormItem>
+        
         <FormItem
           {...formItemLayout}
           label="邮编：">

@@ -2,18 +2,26 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 const SubMenu = Menu.SubMenu;
+
+const keyMap = {
+  '/user': '0',
+  '/website/add': '1',
+  '/website/list': '2'
+}
 
 const AsideMenu = React.createClass({
   handleClick(e){
   },
 
   render(){
+    var select = [keyMap[this.props.pathname]];
     return (
       <aside className="ant-layout-sider">
-        <div className="ant-layout-logo"> Oauth2.0</div>
+        <div className="ant-layout-logo">AUTHORIZE</div>
       <Menu mode="inline" theme="dark" onClick={this.handleClick}
-        defaultSelectedKeys={['0']} defaultOpenKeys={['sub0','sub1','sub2']}>
+        defaultSelectedKeys={select} defaultOpenKeys={['sub0','sub1','sub2']}>
         <SubMenu key="sub0" title={<span><Icon type="user" />我的资料</span>}>
           <Menu.Item key="0"><Link to="/user">资料修改</Link></Menu.Item>
         </SubMenu>
@@ -34,4 +42,10 @@ const AsideMenu = React.createClass({
 })
 ;
 
-export default AsideMenu;
+function select(state) {
+  return {
+    data: state
+  }
+}
+
+export default connect(select)(AsideMenu);

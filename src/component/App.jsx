@@ -8,9 +8,10 @@ import { connect } from 'react-redux';
 
 const App = React.createClass({
   render(){
+      console.log(this.props)
     return (
       <div className="ant-layout-aside" id="main">
-        <AsideMenu />
+        <AsideMenu pathname={this.props.location.pathname} />
         <Header />
         <div className="ant-layout-main">
         <div className="ant-layout-container">

@@ -9,12 +9,13 @@ import thunk from 'redux-thunk';
 
 import 'whatwg-fetch';
 
-import { Router, Route, Link, hashHistory } from 'react-router'
+import { Router, Route, Link, hashHistory, IndexRedirect } from 'react-router'
 import '../css/MainContent.less';
 
 import App from '../component/App';
 import UserinfoForm from '../views/UserinfoForm';
 import WebsiteAddForm from '../views/WebsiteAddForm';
+import WebsiteList from '../views/WebsiteList.jsx';
 
 import rootReducer from '../reducer/rootReducer';
 const createStoreWithMiddlewares = applyMiddleware(thunk)(createStore);
@@ -25,10 +26,11 @@ render((
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path="/" component={App}>
+                <IndexRedirect to="/user" />
                 <Route path="/user" component={UserinfoForm} />
                 <Route path="/website">
                     <Route path="/website/add" component={WebsiteAddForm} />
-                    <Route path="/website/list" component={UserinfoForm} />
+                    <Route path="/website/list" component={WebsiteList} />
                 </Route>
             </Route>
         </Router>
