@@ -88,6 +88,10 @@ let WebsiteList = React.createClass({
                             <p>AK:&emsp;{item.terminal_key}</p>
                             <p>AS:&emsp;{item.terminal_token}</p>
                             <p className="website-box-content-domain">{item.website_domain}</p>
+                            <div className="website-box-content-icon">
+                                <Icon type="edit" />
+                                <Icon type="delete" />
+                            </div>
                         </div>
                         <div className="website-box-foot">
                             <div className="website-box-foot-title">

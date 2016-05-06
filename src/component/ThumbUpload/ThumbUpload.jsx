@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './ThumbUpload.less';
+import { Button } from 'antd';
 
 window.$ = require('jquery');
 
@@ -127,10 +128,13 @@ const ThumbUpload = React.createClass({
                         <div className="thumb-upload-view" id={this.state.view_id} style={thumbStyle} onClick={this.click}></div>
                     </div>
                     <input id={this.state.file_id} type="file" onChange={this.change}/>
-
-                    <div className="thumb-upload-modal" id={this.state.modal_id} style={modalStyle}></div>
-                    <button className="thumb-upload-button" id={this.state.ok_id} style={modalStyle}>截取头像</button>
-                    <button className="thumb-upload-cancel" style={modalStyle} onClick={this.cancel}>取消截图</button>
+                    
+                    <div style={modalStyle}>
+                        <div className="thumb-upload-modal" id={this.state.modal_id}></div>
+                        <Button className="thumb-upload-button" type="ghost" id={this.state.ok_id}>截取头像</Button>
+                        <Button className="thumb-upload-cancel" type="ghost" onClick={this.cancel}>取消截图</Button>
+                    </div>
+                    
                 </div>
             </div>
         )
