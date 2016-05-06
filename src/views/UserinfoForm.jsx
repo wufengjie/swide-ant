@@ -69,7 +69,10 @@ let UserinfoForm = React.createClass({
       body: form.join('&')
     }).then(function(data){
       data.json().then(function(result){
-        console.log(result)
+        // console.log(result)
+        if(result.code == 0){
+          alert('修改成功');
+        }
       }, function(err){
         console.log(err)
       })

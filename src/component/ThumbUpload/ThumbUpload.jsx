@@ -79,6 +79,7 @@ const ThumbUpload = React.createClass({
                 // _this.setState({
                 //     thumb: data.avatar
                 // })
+                alert('修改成功');
             }
         }, function(err){
             console.log(err);
@@ -93,6 +94,12 @@ const ThumbUpload = React.createClass({
 
     click(){
         $('#' + this.state.file_id).click();
+    },
+    
+    cancel(){
+        this.setState({
+            cliping: false
+        })
     },
     
     render() {
@@ -123,6 +130,7 @@ const ThumbUpload = React.createClass({
 
                     <div className="thumb-upload-modal" id={this.state.modal_id} style={modalStyle}></div>
                     <button className="thumb-upload-button" id={this.state.ok_id} style={modalStyle}>截取头像</button>
+                    <button className="thumb-upload-cancel" style={modalStyle} onClick={this.cancel}>取消截图</button>
                 </div>
             </div>
         )

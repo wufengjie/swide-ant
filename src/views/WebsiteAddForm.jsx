@@ -198,6 +198,10 @@ let WebsiteAddForm = React.createClass({
 
         return (
             <Form horizontal>
+                <FormItem {...formItemLayout} label="&emsp;">
+                    <h1>添加网站授权</h1>
+                </FormItem>
+                
                 <FormItem
                     {...formItemLayout}
                     label="网站名称：">
