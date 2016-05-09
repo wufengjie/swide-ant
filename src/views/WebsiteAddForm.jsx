@@ -23,8 +23,8 @@ let WebsiteAddForm = React.createClass({
     getInitialState() {
         return {
             hashchecked: false,
-            checkurl: '请输入网站域名',
-            hashcode: '请输入网站域名',
+            checkurl: '',
+            hashcode: '',
             showalert: false,
             alerttype: 'info',
             alertmsg: '请将上面的hash代码保存到指定网址到文件后点击验证来确认是否能够与平台相连接。',
@@ -174,6 +174,19 @@ let WebsiteAddForm = React.createClass({
             wrapperCol: {span: 12}
         };
 
+        const nameProps = getFieldProps('name', {
+            rules: [
+                {required: true, message: '请填入有效的站点名'}
+            ],
+            initialValue: ''
+        });
+        
+        let nameFormItem = <FormItem
+            {...formItemLayout}
+            label="网站名称：">
+            <Input type="text" {...nameProps} placeholder="网站名称"/>
+        </FormItem>;
+
         const domainProps = getFieldProps('domain', {
             rules: [
                 {required: true, message: '请填入有效的域名'}
@@ -181,12 +194,11 @@ let WebsiteAddForm = React.createClass({
             initialValue: ''
         });
 
-        const nameProps = getFieldProps('name', {
-            rules: [
-                {required: true, message: '请填入有效的站点名'}
-            ],
-            initialValue: ''
-        });
+        let domainFormItem = <FormItem
+            {...formItemLayout}
+            label="网站域名：">
+            <Input type="text" {...domainProps} placeholder="请输入你的网站域名" onBlur={this.getHashCode}/>
+        </FormItem>;
 
         const descProps = getFieldProps('desc', {
             rules: [
@@ -194,71 +206,66 @@ let WebsiteAddForm = React.createClass({
             ],
             initialValue: ''
         });
+        
+        let descFormItem = <FormItem
+            {...formItemLayout}
+            label="网站描述：">
+            <Input type="textarea" {...descProps} placeholder="网站描述" />
+        </FormItem>;
+        
+        let hashDom = '';
+        let alertDom = '';
+        
+        if( this.state.showalert ){
+            alertDom = <Alert message="域名验证提示:"
+                              description={this.state.alertmsg}
+                              type={this.state.alerttype}
+                              showIcon />
+        }
+        
+        if( this.state.checkurl && this.state.hashcode ){
+            hashDom = (
+                <div>
+                    <FormItem
+                        {...formItemLayout}
+                        label="验证地址：">
+                        <a href={this.state.checkurl} target="_blank">{this.state.checkurl}</a>
+                    </FormItem>
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="HashCode：">
+                        <code>{this.state.hashcode}</code>
+                        <div>
+                            <Button type="ghost" loading={this.state.checking} onClick={this.hashCheck}>
+                                <Icon type="check"/> 去验证
+                            </Button>
+                        </div>
+                    </FormItem>
+
+                    <FormItem
+                        wrapperCol={{ span: 12, offset: 7 }}>
+                        {alertDom}
+                    </FormItem>
+                </div>
+            )
+        }
 
 
         return (
             <Form horizontal>
-                <FormItem {...formItemLayout} label="&emsp;">
+                <FormItem wrapperCol={{ span: 12, offset: 7 }}>
                     <h1>添加网站授权</h1>
                 </FormItem>
                 
-                <FormItem
-                    {...formItemLayout}
-                    label="网站名称：">
-                    <Input type="text" {...nameProps} placeholder="网站名称"/>
-                </FormItem>
+                {nameFormItem}
 
-                <FormItem
-                    {...formItemLayout}
-                    label="网站域名：">
-                    <Input type="text" {...domainProps} placeholder="请输入你的网站域名" onBlur={this.getHashCode}/>
-                </FormItem>
+                {domainFormItem}
                 
-                {function(){
-                    if( _this.state.hashcode !== '请输入网站域名' ){
-                        return (
-                            <div>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="验证地址：">
-                                    <a href="http://www/rootbat.txt" target="_blank">{_this.state.checkurl}</a>
-                                </FormItem>
+                {hashDom}
 
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="HashCode：">
-                                    <code>{_this.state.hashcode}</code>
-                                    <div>
-                                        <Button type="ghost" loading={_this.state.checking} onClick={_this.hashCheck}>
-                                            <Icon type="check"/> 去验证
-                                        </Button>
-                                    </div>
-                                </FormItem>
-
-                                <FormItem
-                                    wrapperCol={{ span: 12, offset: 7 }}>
-                                    {function(){
-                                        if( _this.state.showalert ){
-                                            return <Alert message="域名验证提示:"
-                                                          description={_this.state.alertmsg}
-                                                          type={_this.state.type}
-                                                          showIcon/>
-                                        }
-                                    }()}
-                                </FormItem>
-                            </div>
-                        )
-                    }
-                }()}
-
+                {descFormItem}
                 
-
-                <FormItem
-                    {...formItemLayout}
-                    label="网站描述：">
-                    <Input type="textarea" {...descProps} placeholder="随便写" id="textarea" name="textarea"/>
-                </FormItem>
-
                 <FormItem
                     wrapperCol={{ span: 12, offset: 7 }}>
                     <Button type="primary" onClick={this.handleSubmit}>确定</Button>
@@ -267,7 +274,7 @@ let WebsiteAddForm = React.createClass({
                 </FormItem>
             </Form>
         );
-    },
+    }
 });
 
 WebsiteAddForm = createForm()(WebsiteAddForm);
