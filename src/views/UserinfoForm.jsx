@@ -153,6 +153,16 @@ let UserinfoForm = React.createClass({
         <Radio value="1">女</Radio>
       </RadioGroup>
     </FormItem>
+    
+    const phoneProps = getFieldProps('user_telphone', {
+      initialValue: this.state.user_telphone
+    });
+
+    let phoneFormItem = <FormItem
+        {...formItemLayout}
+        label="电话：">
+      <Input {...phoneProps} type="tel" placeholder="电话号码" />
+    </FormItem>;
 
     const signatureProps = getFieldProps('user_signature' ,{
       rules: [{ required: true,message:'真的不打算说点什么吗？' }],
@@ -212,6 +222,7 @@ let UserinfoForm = React.createClass({
         {nickFormItem}
         {realnameFormItem}
         {sexFormItem}
+        {phoneFormItem}
         {signatureFormItem}
         {locateFormItem}
         {zipcodeFormItem}
