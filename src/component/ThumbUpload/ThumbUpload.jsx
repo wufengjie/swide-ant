@@ -122,19 +122,15 @@ const ThumbUpload = React.createClass({
         
         return (
             <div className="thumb-upload">
-                <div className="col-7">&nbsp;</div>
-                <div className="col-12">
-                    <div className="thumb-upload-view-wrapper">
-                        <div className="thumb-upload-view" id={this.state.view_id} style={thumbStyle} onClick={this.click}></div>
-                    </div>
-                    <input id={this.state.file_id} type="file" onChange={this.change}/>
-                    
-                    <div style={modalStyle}>
-                        <div className="thumb-upload-modal" id={this.state.modal_id}></div>
-                        <Button className="thumb-upload-button" type="ghost" id={this.state.ok_id}>截取头像</Button>
-                        <Button className="thumb-upload-cancel" type="ghost" onClick={this.cancel}>取消截图</Button>
-                    </div>
-                    
+                <div className="thumb-upload-view-wrapper">
+                    <div className="thumb-upload-view" id={this.state.view_id} style={thumbStyle} onClick={this.click}></div>
+                </div>
+                <input id={this.state.file_id} type="file" onChange={this.change}/>
+
+                <div style={modalStyle}>
+                    <div className="thumb-upload-modal" id={this.state.modal_id}></div>
+                    <Button className="thumb-upload-button" type="ghost" id={this.state.ok_id}>截取头像</Button>
+                    <Button className="thumb-upload-cancel" type="ghost" onClick={this.cancel}>取消截图</Button>
                 </div>
             </div>
         )

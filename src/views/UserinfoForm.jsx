@@ -199,7 +199,9 @@ let UserinfoForm = React.createClass({
     
     return (
       <Form horizontal>
-        <ThumbUpload thumb={this.state.user_avatar}></ThumbUpload>
+        <FormItem wrapperCol={{ span: 12, offset: 7 }}>
+          <ThumbUpload thumb={this.state.user_avatar}></ThumbUpload>
+        </FormItem>
 
         <FormItem
           {...formItemLayout}
