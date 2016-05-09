@@ -53,7 +53,7 @@ let UserinfoForm = React.createClass({
     
     var form = [];
     Object.keys(obj).forEach(function(key){
-      if(typeof obj[key] !== 'undefined'){
+      if(typeof obj[key] !== 'undefined' && key.indexOf('user_') === 0){
         form.push(key + '=' + obj[key]);
       }
     });
@@ -204,7 +204,7 @@ let UserinfoForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="用户名：">
-          <p className="ant-form-text" id="userName" name="userName">{this.state.user_mail}</p>
+          <p className="ant-form-text">{this.state.user_mail}</p>
         </FormItem>
         
         {nickFormItem}
