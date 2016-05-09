@@ -152,7 +152,7 @@ let UserinfoForm = React.createClass({
         <Radio value="0">男</Radio>
         <Radio value="1">女</Radio>
       </RadioGroup>
-    </FormItem>
+    </FormItem>;
     
     const phoneProps = getFieldProps('user_telphone', {
       initialValue: this.state.user_telphone
@@ -188,18 +188,18 @@ let UserinfoForm = React.createClass({
     const zipcodeProps = getFieldProps('user_zipcode' ,{
       rules: [{ required: false }],
       initialValue: this.state.user_zipcode
-    })
+    });
     
     let zipcodeFormItem = <FormItem
         {...formItemLayout}
         label="邮编：">
       <Input {...zipcodeProps} type="text" placeholder="邮编" />
-    </FormItem>
+    </FormItem>;
     
     const addressProps = getFieldProps('user_address' ,{
       rules: [{ required: false,message:'地址还是填一个吧？' }],
       initialValue: this.state.user_address
-    })
+    });
     
     let addressFormItem = <FormItem
         {...formItemLayout}
