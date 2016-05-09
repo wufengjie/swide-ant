@@ -107,52 +107,98 @@ let UserinfoForm = React.createClass({
     let address = citys;
     const { getFieldProps } = this.props.form;
 
-    const usernameProps = getFieldProps('user_realname',{
-      rules: [
-        { required: true, message: '真实姓名还是需要的' }
-      ],
-      initialValue: this.state.user_realname
-    })
+    const formItemLayout = {
+      labelCol: { span: 7 },
+      wrapperCol: { span: 12 }
+    };
 
     const nicknameProps = getFieldProps('user_nick',{
       rules: [
         { required: true, message: '昵称还是需要的' }
       ],
       initialValue: this.state.user_nick
-    })
-    const radioProps = getFieldProps('user_sex', {
+    });
+    
+    let nickFormItem = <FormItem
+        {...formItemLayout}
+        label="昵称：">
+      <Input {...nicknameProps} type="text" placeholder="昵称" />
+    </FormItem>;
+
+    const realnameProps = getFieldProps('user_realname',{
+      rules: [
+        { required: true, message: '真实姓名还是需要的' }
+      ],
+      initialValue: this.state.user_realname
+    });
+    
+    let realnameFormItem = <FormItem
+        {...formItemLayout}
+        label="真实姓名：">
+      <Input {...realnameProps} type="text" placeholder="请输入你的真实姓名" />
+    </FormItem>;
+    
+    const sexProps = getFieldProps('user_sex', {
       rules: [
         { required: true, message: '你不会是其他性别吧？' }
       ],
       initialValue: this.state.user_sex
     });
+    
+    let sexFormItem = <FormItem
+        {...formItemLayout}
+        label="性别：">
+      <RadioGroup {...sexProps}>
+        <Radio value="0">男</Radio>
+        <Radio value="1">女</Radio>
+      </RadioGroup>
+    </FormItem>
 
     const signatureProps = getFieldProps('user_signature' ,{
       rules: [{ required: true,message:'真的不打算说点什么吗？' }],
       initialValue: this.state.user_signature
-    })
-    const fulladdressProps = getFieldProps('user_address' ,{
-      rules: [{ required: false,message:'地址还是填一个吧？' }],
-      initialValue: this.state.user_address
-    })
-    const zipcodeProps = getFieldProps('user_zipcode' ,{
-      rules: [{ required: false }],
-      initialValue: this.state.user_zipcode
-    })
-    const formItemLayout = {
-      labelCol: { span: 7 },
-      wrapperCol: { span: 12 }
-    };
+    });
+    
+    let signatureFormItem = <FormItem
+        {...formItemLayout}
+        label="签名：">
+      <Input {...signatureProps} type="textarea" placeholder="随便写" />
+    </FormItem>;
 
     const locateProps = getFieldProps('locate', {
       initialValue: this.state.locate
     });
     
+    let locateFormItem = <FormItem
+        {...formItemLayout}
+        label="选择地址：">
+      <Cascader options={address} {...locateProps} onChange={this.changeLocate} />
+    </FormItem>;
+
+    const zipcodeProps = getFieldProps('user_zipcode' ,{
+      rules: [{ required: false }],
+      initialValue: this.state.user_zipcode
+    })
+    
+    let zipcodeFormItem = <FormItem
+        {...formItemLayout}
+        label="邮编：">
+      <Input {...zipcodeProps} type="text" placeholder="邮编" />
+    </FormItem>
+    
+    const addressProps = getFieldProps('user_address' ,{
+      rules: [{ required: false,message:'地址还是填一个吧？' }],
+      initialValue: this.state.user_address
+    })
+    
+    let addressFormItem = <FormItem
+        {...formItemLayout}
+        label="详细地址：">
+      <Input {...addressProps} type="textarea" placeholder="请填写你的详细地址" />
+    </FormItem>;
+    
     return (
-
-
       <Form horizontal>
-        
         <ThumbUpload thumb={this.state.user_avatar}></ThumbUpload>
 
         <FormItem
@@ -160,53 +206,15 @@ let UserinfoForm = React.createClass({
           label="用户名：">
           <p className="ant-form-text" id="userName" name="userName">{this.state.user_mail}</p>
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="昵称：">
-           <Input {...nicknameProps} type="text" placeholder="昵称" />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="真实姓名：">
-          <Input {...usernameProps} type="text" placeholder="请输入你的真实姓名" />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="性别：">
-          <RadioGroup {...radioProps}>
-            <Radio value="0">男</Radio>
-            <Radio value="1">女</Radio>
-          </RadioGroup>
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="签名：">
-          <Input {...signatureProps} type="textarea" placeholder="随便写" id="textarea" name="textarea" />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="选择地址：">
-          <Cascader options={address} {...locateProps} onChange={this.changeLocate} />
-        </FormItem>
         
-        <FormItem
-          {...formItemLayout}
-          label="邮编：">
-           <Input {...zipcodeProps} type="text" placeholder="邮编" />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label="详细地址：">
-          <Input {...fulladdressProps} type="textarea" placeholder="请填写你的详细地址" id="fulladdress" name="fulladdress" />
-        </FormItem>
-
-
-
+        {nickFormItem}
+        {realnameFormItem}
+        {sexFormItem}
+        {signatureFormItem}
+        {locateFormItem}
+        {zipcodeFormItem}
+        {addressFormItem}
+        
         <FormItem
           wrapperCol={{ span: 12, offset: 7 }} >
           <Button type="primary" onClick={this.handleSubmit}>确定</Button>
@@ -215,7 +223,7 @@ let UserinfoForm = React.createClass({
         </FormItem>
       </Form>
     );
-  },
+  }
 });
 
 UserinfoForm = createForm()(UserinfoForm);
