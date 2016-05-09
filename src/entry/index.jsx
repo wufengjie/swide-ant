@@ -1,6 +1,5 @@
 import '../common/lib';
 import ReactDOM from 'react-dom';
-import { render } from 'react-dom';
 import React from 'react';
 
 import { Provider } from 'react-redux';
@@ -23,7 +22,7 @@ const createStoreWithMiddlewares = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddlewares(rootReducer);
 
 
-render((
+ReactDOM.render((
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path="/" component={App}>
@@ -39,4 +38,4 @@ render((
             </Route>
         </Router>
     </Provider>
-), document.getElementById("main"))
+), document.getElementById("main"));

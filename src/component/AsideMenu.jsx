@@ -8,7 +8,8 @@ const SubMenu = Menu.SubMenu;
 const keyMap = {
   '/user': '0',
   '/website/add': '1',
-  '/website/list': '2'
+  '/website/list': '2',
+  '/friend/contact': '5'
 }
 
 const AsideMenu = React.createClass({
