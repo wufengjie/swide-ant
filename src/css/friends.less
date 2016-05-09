@@ -1,0 +1,63 @@
+@panel-border-color:#f1f1f1;
+.ib{
+  display: inline-block;
+}
+.tr{
+  text-align: right;
+}
+.pt10{
+  padding-top: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+
+.panel{
+  border: 1px solid @panel-border-color;
+  border-radius: 5px;
+}
+.friend-panel{
+  margin: 0 10px;
+}
+.panel-head,.panel-foot{
+  padding: 15px 10px;
+}
+.panel-head{
+  border-bottom: 1px solid @panel-border-color;
+  font-size: 18px;
+}
+.panel-foot{
+  border-top: 1px solid @panel-border-color;
+}
+.panel-body{
+
+}
+.friend-avatar{
+  width: 60px;
+  height: 60px;
+}
+.friend-item{
+  padding: 15px 10px;
+  border-bottom: 1px solid #f8f8f8;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+.friend-avatar,.friend-info,.friend-opt{
+  vertical-align: text-top;
+  display: inline-block;
+}
+.friend-info{
+  padding-left: 10px;
+}
+.friend-name{
+  font-size: 16px;
+}
+.friend-delete-btn{
+  margin-top: 6px;
+  &:hover{
+    border-color: rgb(255, 86, 14);
+    color: rgb(255, 86, 14)
+  }
+
+}
