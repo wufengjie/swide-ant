@@ -12,7 +12,9 @@ import ThumbUpload from '../component/ThumbUpload/ThumbUpload.jsx';
 
 let UserinfoForm = React.createClass({
   getInitialState(){
-    return {};
+    return {
+      locate: ['110000', '110100', '110101'] //默认北京地区
+    };
   },
   
   componentDidMount() {
@@ -104,20 +106,7 @@ let UserinfoForm = React.createClass({
   render() {
     let address = citys;
     const { getFieldProps } = this.props.form;
-    console.log(this.props);
-    const defaultLocate = ["110000", "110100", "110101"];
-    const uploadProps = {
-      action: '/upload.do',
-      listType: 'picture-card',
-      onChange: this.handleThumb,
-      defaultFileList: [{
-        uid: -1,
-        name: 'xxx.png',
-        status: 'done',
-        url: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-        thumbUrl: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-      }]
-    };
+
     const usernameProps = getFieldProps('user_realname',{
       rules: [
         { required: true, message: '真实姓名还是需要的' }
@@ -154,6 +143,10 @@ let UserinfoForm = React.createClass({
       labelCol: { span: 7 },
       wrapperCol: { span: 12 }
     };
+
+    const locateProps = getFieldProps('locate', {
+      initialValue: this.state.locate
+    });
     
     return (
 
@@ -197,7 +190,7 @@ let UserinfoForm = React.createClass({
         <FormItem
           {...formItemLayout}
           label="选择地址：">
-          <Cascader options={address} defaultValue={defaultLocate} value={this.state.locate} onChange={this.changeLocate} />
+          <Cascader options={address} {...locateProps} onChange={this.changeLocate} />
         </FormItem>
         
         <FormItem

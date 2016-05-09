@@ -1,11 +1,11 @@
 var initState = {
-    userInfo: {}
+    userInfo: {},
 };
 
 function reducer(state = initState, action){
     return {
         userInfo: userInfo(state.userInfo, action),
-        prefix: ''
+        prefix: 'http://127.0.0.1:9002'
     }
 }
 
