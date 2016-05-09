@@ -31,9 +31,6 @@ const AsideMenu = React.createClass({
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon type="team" />朋友管理</span>}>
           <Menu.Item key="5"><Link to="/friend/contact">通讯录</Link></Menu.Item>
-          <Menu.Item key="6">选项6</Menu.Item>
-          <Menu.Item key="7">选项7</Menu.Item>
-          <Menu.Item key="8">选项8</Menu.Item>
         </SubMenu>
       </Menu>
       </aside>

@@ -16,14 +16,14 @@ let UserinfoForm = React.createClass({
       locate: ['110000', '110100', '110101'] //默认北京地区
     };
   },
-  
+
   componentDidMount() {
     this.props.form.setFieldsValue({
       eat: true,
       sleep: true,
       beat: true
     });
-    
+
     fetch(this.props.data.prefix + '/api/me/status', {credentials: 'include'}).then((data) => {
       data.json().then((data) => {
         this.setState(data.result.other);
@@ -34,7 +34,7 @@ let UserinfoForm = React.createClass({
         console.log(err)
       })
     }, function(err){
-      
+
     })
   },
 
@@ -50,18 +50,18 @@ let UserinfoForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     var obj = this.props.form.getFieldsValue();
-    
+
     var form = [];
     Object.keys(obj).forEach(function(key){
       if(typeof obj[key] !== 'undefined' && key.indexOf('user_') === 0){
         form.push(key + '=' + obj[key]);
       }
     });
-    
+
     form.push('user_province' + '=' + this.state.locate[0]);
     form.push('user_city' + '=' + this.state.locate[1]);
     form.push('user_area' + '=' + this.state.locate[2]);
-    
+
     fetch(this.props.data.prefix + '/api/me/user/modify', {
       method: 'POST',
       credentials: 'include',
@@ -118,7 +118,7 @@ let UserinfoForm = React.createClass({
       ],
       initialValue: this.state.user_nick
     });
-    
+
     let nickFormItem = <FormItem
         {...formItemLayout}
         label="昵称：">
@@ -131,20 +131,20 @@ let UserinfoForm = React.createClass({
       ],
       initialValue: this.state.user_realname
     });
-    
+
     let realnameFormItem = <FormItem
         {...formItemLayout}
         label="真实姓名：">
       <Input {...realnameProps} type="text" placeholder="请输入你的真实姓名" />
     </FormItem>;
-    
+
     const sexProps = getFieldProps('user_sex', {
       rules: [
         { required: true, message: '你不会是其他性别吧？' }
       ],
       initialValue: this.state.user_sex
     });
-    
+
     let sexFormItem = <FormItem
         {...formItemLayout}
         label="性别：">
@@ -153,7 +153,7 @@ let UserinfoForm = React.createClass({
         <Radio value="1">女</Radio>
       </RadioGroup>
     </FormItem>;
-    
+
     const phoneProps = getFieldProps('user_telphone', {
       initialValue: this.state.user_telphone
     });
@@ -168,7 +168,7 @@ let UserinfoForm = React.createClass({
       rules: [{ required: true,message:'真的不打算说点什么吗？' }],
       initialValue: this.state.user_signature
     });
-    
+
     let signatureFormItem = <FormItem
         {...formItemLayout}
         label="签名：">
@@ -178,7 +178,7 @@ let UserinfoForm = React.createClass({
     const locateProps = getFieldProps('locate', {
       initialValue: this.state.locate
     });
-    
+
     let locateFormItem = <FormItem
         {...formItemLayout}
         label="选择地址：">
@@ -189,24 +189,24 @@ let UserinfoForm = React.createClass({
       rules: [{ required: false }],
       initialValue: this.state.user_zipcode
     });
-    
+
     let zipcodeFormItem = <FormItem
         {...formItemLayout}
         label="邮编：">
       <Input {...zipcodeProps} type="text" placeholder="邮编" />
     </FormItem>;
-    
+
     const addressProps = getFieldProps('user_address' ,{
       rules: [{ required: false,message:'地址还是填一个吧？' }],
       initialValue: this.state.user_address
     });
-    
+
     let addressFormItem = <FormItem
         {...formItemLayout}
         label="详细地址：">
       <Input {...addressProps} type="textarea" placeholder="请填写你的详细地址" />
     </FormItem>;
-    
+
     return (
       <Form horizontal>
         <FormItem wrapperCol={{ span: 12, offset: 7 }}>
@@ -218,7 +218,7 @@ let UserinfoForm = React.createClass({
           label="用户名：">
           <p className="ant-form-text">{this.state.user_mail}</p>
         </FormItem>
-        
+
         {nickFormItem}
         {realnameFormItem}
         {sexFormItem}
@@ -227,7 +227,7 @@ let UserinfoForm = React.createClass({
         {locateFormItem}
         {zipcodeFormItem}
         {addressFormItem}
-        
+
         <FormItem
           wrapperCol={{ span: 12, offset: 7 }} >
           <Button type="primary" onClick={this.handleSubmit}>确定</Button>
