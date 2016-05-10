@@ -135,7 +135,7 @@ const FriendContact = React.createClass({
         var _this = this;
         return (
             <Row>
-                <Col span="12" className="pr10">
+                <Col span="12">
 
                     <div className="panel friend-panel ">
                         <div className="panel-head">好友</div>
@@ -165,7 +165,7 @@ const FriendContact = React.createClass({
                         </div>
                     </div>
                 </Col>
-                <Col span="12" className="pl10">
+                <Col span="12">
                     <div className="panel friend-panel ">
                         <div className="panel-head">申请列表</div>
                         <div className="panel-body">
