@@ -69,6 +69,11 @@ const Search = React.createClass({
         })
         this.getSearchResult(page);
     },
+    closeSearch(){
+      this.setState({
+        open:false
+      })
+    },
     searchSubmit() {
         this.setState({pagesHasLoad: 1})
         console.log(this.state.pagesHasLoad);
@@ -149,6 +154,9 @@ const Search = React.createClass({
                     </div>
                     <div className="search-loadmore tc">
                         <Button type="primary" onClick={this.loadMore}>加载更多</Button>
+                    </div>
+                    <div className="search-close" onClick={this.closeSearch}>
+                      <Icon type="cross-circle" />
                     </div>
                 </div>
 
