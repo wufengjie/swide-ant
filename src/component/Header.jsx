@@ -2,11 +2,11 @@ import React from 'react';
 // import { Menu, Icon } from 'antd';
 // const SubMenu = Menu.SubMenu;
 
-import Login from './Login';
+import Search from './Search';
 
 const Header = React.createClass({
   render(){
-    return (<div className="ant-layout-header"><Login /></div>);
+    return (<div className="ant-layout-header"><Search /></div>);
   }
 })
 

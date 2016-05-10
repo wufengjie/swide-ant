@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon } from 'antd';
+import { Select, Radio, Checkbox, Button, DatePicker, InputNumber, Form, Cascader,Input,Upload,Icon,Modal } from 'antd';
 import { citys } from '../common/citys';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -73,7 +73,10 @@ let UserinfoForm = React.createClass({
       data.json().then(function(result){
         // console.log(result)
         if(result.code == 0){
-          alert('修改成功');
+          Modal.success({
+            title: '保存成功！',
+            content: ''
+          });
         }
       }, function(err){
         console.log(err)
