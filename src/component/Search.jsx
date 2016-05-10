@@ -1,17 +1,16 @@
 import React from 'react';
-import {Icon, Button, Input, Modal } from 'antd';
+import {Icon, Button, Input, Modal} from 'antd';
 import classNames from 'classnames';
 const InputGroup = Input.Group;
 import {connect} from 'react-redux';
 
 const Search = React.createClass({
     getInitialState() {
-        return {value: '', focus: false, open: false, friendList: []};
+        return {value: '', focus: false, open: false, friendList: [], pagesHasLoad: 0};
     },
     componentDidMount() {
         var _this = this;
         document.body.addEventListener("keyup", function(e) {
-            console.log(e);
             _this.handleKeyUp(e);
         })
     },
@@ -36,47 +35,52 @@ const Search = React.createClass({
         this.getSearchResult(this.value, 1);
 
     },
-    handleAdd(item,index){
-      var _this = this;
-      console.log(item,index);
-      if(item)
-      $.get({
-          url: _this.props.data.prefix + "/api/me/user/watch/" + item.user_openid,
-          dataType: "json",
-          xhrFields: {
-              withCredentials: true
-          },
-          success: function(data) {
-            console.log(data,data.code);
-              if (data.code == 0) {
-                  Modal.success({title: '已申请！', content: ''});
-                  _this.state.friendList.splice(index,1);
-                  _this.setState({
-                    friendList:_this.state.friendList
-                  })
-              } else {
-                  Modal.error({title: '出现错误了', content: data.message});
-              }
+    handleAdd(item, index) {
+        var _this = this;
+        console.log(item, index);
+        if (item)
+            $.get({
+                url: _this.props.data.prefix + "/api/me/user/watch/" + item.user_openid,
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    console.log(data, data.code);
+                    if (data.code == 0) {
+                        Modal.success({title: '已申请！', content: ''});
+                        _this.state.friendList.splice(index, 1);
+                        _this.setState({friendList: _this.state.friendList})
+                    } else {
+                        Modal.error({title: '出现错误了', content: data.message});
+                    }
 
-          },
-          error: function(err) {
-            Modal.error({title: '出现错误了', content: err});
-          }
-      })
+                },
+                error: function(err) {
+                    Modal.error({title: '出现错误了', content: err});
+                }
+            })
 
     },
-    searchSubmit(){
-      this.getSearchResult(1);
+    loadMore() {
+       let page = this.state.pagesHasLoad + 1;
+        this.setState({
+            pagesHasLoad: page
+        })
+        this.getSearchResult(page);
+    },
+    searchSubmit() {
+        this.setState({pagesHasLoad: 1})
+        console.log(this.state.pagesHasLoad);
+        this.getSearchResult(1);
     },
     getSearchResult(page) {
         const _this = this;
         const keyword = this.state.value;
         $.post({
-            url: this.props.data.prefix + "/api/me/user/search",
+            url: this.props.data.prefix + "/api/me/user/search?page="+page+"&size=10",
             dataType: "json",
             data: {
-                page: 1,
-                size: 10,
                 keyword: keyword
             },
             xhrFields: {
@@ -84,6 +88,9 @@ const Search = React.createClass({
             },
             success: function(data) {
                 var _friendList = _this.state.friendList;
+                if (page == 1) {
+                    _friendList = []
+                }
                 _friendList = _friendList.concat(data.result);
                 _this.setState({friendList: _friendList});
             },
@@ -96,7 +103,6 @@ const Search = React.createClass({
         if (press.keyCode == 27) {
             this.setState({open: false, focus: false})
         } else if (press.keyCode == 13) {
-            console.log("search 1!!!!");
             this.searchSubmit();
         }
     },
@@ -110,7 +116,7 @@ const Search = React.createClass({
         const searchWrapperCls = classNames({'search-wrapper': true, 'search-wrapper-open': this.state.open});
         const searchOutterCls = classNames({'searchOutter': true, 'searchOutter-open': this.state.open});
         return (
-            <div className="searchOutter"  className={searchOutterCls}>
+            <div className="searchOutter" className={searchOutterCls}>
                 <InputGroup className={searchCls} style={this.props.style}>
                     <Input {...this.props} value={this.state.value} onChange={this.handleInputChange} onFocus={this.handleFocus} onBlur={this.handleBlur} size="large"/>
                     <div className="ant-input-group-wrap">
@@ -134,11 +140,15 @@ const Search = React.createClass({
                                         </div>
                                     </div>
                                     <div className="friend-opt ib pull-right tr">
-                                        <Button type="primary" onClick={_this.handleAdd.bind(_this,item,index)}>加为好友</Button>
+                                        <Button type="primary" onClick={_this.handleAdd.bind(_this, item, index)}>加为好友</Button>
                                     </div>
                                 </div>
                             )
                         })}
+
+                    </div>
+                    <div className="search-loadmore tc">
+                        <Button type="primary" onClick={this.loadMore}>加载更多</Button>
                     </div>
                 </div>
 
