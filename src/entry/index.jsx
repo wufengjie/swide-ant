@@ -21,7 +21,6 @@ import rootReducer from '../reducer/rootReducer';
 const createStoreWithMiddlewares = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddlewares(rootReducer);
 
-
 ReactDOM.render((
     <Provider store={store}>
         <Router history={hashHistory}>

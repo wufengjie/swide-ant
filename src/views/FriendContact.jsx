@@ -9,17 +9,17 @@ const FriendContact = React.createClass({
   getInitialState() {
     return {
       value: '',
-      focus: false,
+      focus: false
     };
   },
   handleInputChange(e) {
     this.setState({
-      value: e.target.value,
+      value: e.target.value
     });
   },
   handleFocusBlur(e) {
     this.setState({
-      focus: e.target === document.activeElement,
+      focus: e.target === document.activeElement
     });
   },
   handleSearch() {
@@ -40,11 +40,11 @@ const FriendContact = React.createClass({
   render(){
     const btnCls = classNames({
       'ant-search-btn': true,
-      'ant-search-btn-noempty': !!this.state.value.trim(),
+      'ant-search-btn-noempty': !!this.state.value.trim()
     });
     const searchCls = classNames({
       'ant-search-input': true,
-      'ant-search-input-focus': this.state.focus,
+      'ant-search-input-focus': this.state.focus
     });
     // function deleteConfirm() {
     //   confirm({
