@@ -16,7 +16,7 @@
     "gulp-rename": "^1.2.2",
     "hammer": "0.0.5",
     "jquery": "^2.2.3",
-    "react": "0.14.x",
+    "react": "^0.14.8",
     "react-dom": "0.14.x",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",

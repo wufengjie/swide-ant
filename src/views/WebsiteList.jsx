@@ -82,7 +82,7 @@ let WebsiteList = React.createClass({
         return (
             <div className="website-list">
                 {this.state.list.map(function(item){
-                    return <div className="website-box" key={item.terminal_key}>
+                    return (<div className="website-box" key={item.terminal_key}>
                         <div className="website-box-content">
                             <p className="website-box-content-title">{item.website_title}</p>
                             <p>AK:&emsp;{item.terminal_key}</p>
@@ -99,7 +99,7 @@ let WebsiteList = React.createClass({
                             </div>
                             <p>{item.website_desc}</p>
                         </div>
-                    </div>
+                    </div>)
                 })}
 
             </div>
