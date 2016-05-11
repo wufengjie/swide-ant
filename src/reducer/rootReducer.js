@@ -5,8 +5,8 @@ var initState = {
 function reducer(state = initState, action){
     return {
         userInfo: userInfo(state.userInfo, action),
-         //prefix: 'http://127.0.0.1:9002',
-        prefix: ''
+         prefix: 'http://127.0.0.1:9002',
+        // prefix: ''
     }
 }
 

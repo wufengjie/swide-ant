@@ -32,7 +32,7 @@ const FriendContact = React.createClass({
         let pageSize = 10;
         let pageToLoad = Math.ceil(this.state.applyList.length/pageSize)+1;
         $.get({
-            url: this.props.data.prefix + "/api/me/user/fans",
+            url: _this.props.data.prefix + "/api/me/user/fans",
             dataType: "json",
             data: {
                 page: pageToLoad,
