@@ -95,7 +95,6 @@ let WebsiteAddForm = React.createClass({
                 alert('请完成表单');
                 return;
             }
-            console.log(values);
             if( !_this.state.hashchecked ){
                 alert('请先验证站点');
                 return;
@@ -123,7 +122,7 @@ let WebsiteAddForm = React.createClass({
                 }
             })
         });
-        
+
     },
 
     getHashCode() {
@@ -149,7 +148,7 @@ let WebsiteAddForm = React.createClass({
                             alerttype: 'info',
                             alertmsg: '请将上面的hash代码保存到指定网址到文件后点击验证来确认是否能够与平台相连接'
                         });
-                        
+
                         // $("#domainAccess").removeClass('panel-danger');
                         // $("#domainAccess").removeClass('panel-success');
                         // $('#accessTip').html('');
@@ -180,7 +179,7 @@ let WebsiteAddForm = React.createClass({
             ],
             initialValue: ''
         });
-        
+
         let nameFormItem = <FormItem
             {...formItemLayout}
             label="网站名称：">
@@ -206,23 +205,23 @@ let WebsiteAddForm = React.createClass({
             ],
             initialValue: ''
         });
-        
+
         let descFormItem = <FormItem
             {...formItemLayout}
             label="网站描述：">
             <Input type="textarea" {...descProps} placeholder="网站描述" />
         </FormItem>;
-        
+
         let hashDom = '';
         let alertDom = '';
-        
+
         if( this.state.showalert ){
             alertDom = <Alert message="域名验证提示:"
                               description={this.state.alertmsg}
                               type={this.state.alerttype}
                               showIcon />
         }
-        
+
         if( this.state.checkurl && this.state.hashcode ){
             hashDom = (
                 <div>
@@ -257,15 +256,15 @@ let WebsiteAddForm = React.createClass({
                 <FormItem wrapperCol={{ span: 12, offset: 7 }}>
                     <h1>添加网站授权</h1>
                 </FormItem>
-                
+
                 {nameFormItem}
 
                 {domainFormItem}
-                
+
                 {hashDom}
 
                 {descFormItem}
-                
+
                 <FormItem
                     wrapperCol={{ span: 12, offset: 7 }}>
                     <Button type="primary" onClick={this.handleSubmit}>确定</Button>

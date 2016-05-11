@@ -112,7 +112,6 @@ const FriendContact = React.createClass({
                             withCredentials: true
                         },
                         success: function(data) {
-                            console.log(data);
                             if (data.code == 0) {
                                 _this.state.friendList.splice(index, 1);
                                 _this.state.applyList.splice(0, 0, item);
