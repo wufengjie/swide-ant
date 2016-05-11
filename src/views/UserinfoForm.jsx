@@ -13,7 +13,8 @@ import ThumbUpload from '../component/ThumbUpload/ThumbUpload.jsx';
 let UserinfoForm = React.createClass({
   getInitialState(){
     return {
-      locate: ['110000', '110100', '110101'] //默认北京地区
+      locate: ['110000', '110100', '110101'], //默认北京地区
+      user_birthday: new Date()
     };
   },
 
@@ -26,6 +27,7 @@ let UserinfoForm = React.createClass({
 
     fetch(this.props.data.prefix + '/api/me/status', {credentials: 'include'}).then((data) => {
       data.json().then((data) => {
+        data.result.other.user_birthday && (data.result.other.user_birthday = new Date(data.result.other.user_birthday));
         this.setState(data.result.other);
         this.setState({
           locate: [data.result.other.user_province, data.result.other.user_city, data.result.other.user_area]
@@ -210,6 +212,26 @@ let UserinfoForm = React.createClass({
       <Input {...addressProps} type="textarea" placeholder="请填写你的详细地址" />
     </FormItem>;
 
+    const birthdayProps = getFieldProps('user_birthday', {
+      initialValue: this.state.user_birthday
+    });
+
+    let birthdayFormItem = <FormItem
+        {...formItemLayout}
+        label="生日：">
+      <DatePicker {...birthdayProps} />
+    </FormItem>;
+
+    const websiteProps = getFieldProps('user_website' ,{
+      initialValue: this.state.user_website
+    });
+
+    let websiteFormItem = <FormItem
+        {...formItemLayout}
+        label="个人站点：">
+      <Input {...websiteProps} type="text" placeholder="请填写你的个人站点" />
+    </FormItem>;
+
     return (
       <Form horizontal>
         <FormItem wrapperCol={{ span: 12, offset: 7 }}>
@@ -226,6 +248,8 @@ let UserinfoForm = React.createClass({
         {realnameFormItem}
         {sexFormItem}
         {phoneFormItem}
+        {websiteFormItem}
+        {birthdayFormItem}
         {signatureFormItem}
         {locateFormItem}
         {zipcodeFormItem}
