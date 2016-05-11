@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 const Search = React.createClass({
     getInitialState() {
-        return {value: '', focus: false, open: false, friendList: [], pagesHasLoad: 0};
+        return {value: '', focus: false, open: false, friendList: [], pagesHasLoad: 0,hideLoadmore:true};
     },
     componentDidMount() {
         var _this = this;
@@ -76,14 +76,16 @@ const Search = React.createClass({
     },
     searchSubmit() {
         this.setState({pagesHasLoad: 1})
-        console.log(this.state.pagesHasLoad);
         this.getSearchResult(1);
     },
     getSearchResult(page) {
         const _this = this;
         const keyword = this.state.value;
+        if(!keyword){
+          return
+        }
         $.post({
-            url: this.props.data.prefix + "/api/me/user/search?page="+page+"&size=10",
+            url: _this.props.data.prefix + "/api/me/user/search?page="+page+"&size=10",
             dataType: "json",
             data: {
                 keyword: keyword
@@ -95,6 +97,11 @@ const Search = React.createClass({
                 var _friendList = _this.state.friendList;
                 if (page == 1) {
                     _friendList = []
+                }
+                if(data.result.length == 10){
+                  _this.setState({
+                    hideLoadmore:false
+                  })
                 }
                 _friendList = _friendList.concat(data.result);
                 _this.setState({friendList: _friendList});
@@ -117,6 +124,9 @@ const Search = React.createClass({
             'ant-search-btn': true,
             'ant-search-btn-noempty': !!this.state.value.trim()
         });
+        const loadMoreCls = classNames({
+          'hidden':this.state.hideLoadmore
+        })
         const searchCls = classNames({'ant-search-input': true, 'ant-search-input-focus': this.state.open, 'ant-search-input-open': this.state.open});
         const searchWrapperCls = classNames({'search-wrapper': true, 'search-wrapper-open': this.state.open});
         const searchOutterCls = classNames({'searchOutter': true, 'searchOutter-open': this.state.open});
@@ -153,7 +163,7 @@ const Search = React.createClass({
 
                     </div>
                     <div className="search-loadmore tc">
-                        <Button type="primary" onClick={this.loadMore}>加载更多</Button>
+                        <Button type="primary" onClick={this.loadMore} className={loadMoreCls}>加载更多</Button>
                     </div>
                     <div className="search-close" onClick={this.closeSearch}>
                       <Icon type="cross-circle" />

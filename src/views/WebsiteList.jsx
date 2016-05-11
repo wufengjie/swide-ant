@@ -28,7 +28,7 @@ let WebsiteList = React.createClass({
     componentDidMount() {
         var _this = this;
         $.ajax({
-            url: this.props.data.prefix + '/api/me/website/list',
+            url: _this.props.data.prefix + '/api/me/website/list',
             xhrFields: {
                 withCredentials: true
             }
