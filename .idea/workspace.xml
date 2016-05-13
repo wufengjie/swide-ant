@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36bcd228-bd1f-4c4a-a363-3d03c997a588" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/ResetPassword.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/antd-demo/1.0.0/index.css" afterPath="$PROJECT_DIR$/dist/antd-demo/1.0.0/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/antd-demo/1.0.0/index.js" afterPath="$PROJECT_DIR$/dist/antd-demo/1.0.0/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/component/AsideMenu.jsx" afterPath="$PROJECT_DIR$/src/component/AsideMenu.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/entry/index.jsx" afterPath="$PROJECT_DIR$/src/entry/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducer/rootReducer.js" afterPath="$PROJECT_DIR$/src/reducer/rootReducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/WebsiteAddForm.jsx" afterPath="$PROJECT_DIR$/src/views/WebsiteAddForm.jsx" />
-    </list>
+    <list default="true" id="36bcd228-bd1f-4c4a-a363-3d03c997a588" name="Default" comment="" />
     <ignored path="swide-ant.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -413,12 +404,12 @@
       <updated>1462847129396</updated>
       <workItem from="1462847130873" duration="13660000" />
       <workItem from="1463036640302" duration="35000" />
-      <workItem from="1463136649507" duration="4400000" />
+      <workItem from="1463136649507" duration="4999000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18095000" />
+    <option name="totallyTimeSpent" value="18694000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="982" extended-state="6" />
