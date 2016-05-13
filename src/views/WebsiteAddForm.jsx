@@ -61,9 +61,10 @@ let WebsiteAddForm = React.createClass({
                 // }
                 //console.log(data);
                 if( data.code == 0 ){
-                    alert('验证成功')
                     _this.setState({
-                        hashchecked: true
+                        hashchecked: true,
+                        alerttype: 'success',
+                        alertmsg: '验证成功'
                     })
                 }
                 else{
