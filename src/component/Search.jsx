@@ -32,8 +32,7 @@ const Search = React.createClass({
         if (this.props.onSearch) {
             this.props.onSearch();
         }
-        this.getSearchResult(this.value, 1);
-
+        this.getSearchResult(1);
     },
     handleAdd(item, index) {
         var _this = this;
