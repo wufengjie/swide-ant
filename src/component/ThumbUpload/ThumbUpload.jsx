@@ -81,6 +81,12 @@ const ThumbUpload = React.createClass({
                 //     thumb: data.avatar
                 // })
                 alert('修改成功');
+                _this.props.dispatch({
+                    type: 'userInfo',
+                    field: {
+                        user_avatar: data.avatar
+                    }
+                })
             }
         }, function(err){
             console.log(err);

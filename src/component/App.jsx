@@ -38,7 +38,6 @@ const App = React.createClass({
                     </div>
                     <Footer />
                 </div>
-                <Login />
             </div>
         )
     }

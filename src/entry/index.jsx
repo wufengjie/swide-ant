@@ -16,6 +16,7 @@ import UserinfoForm from '../views/UserinfoForm';
 import WebsiteAddForm from '../views/WebsiteAddForm';
 import WebsiteList from '../views/WebsiteList';
 import FriendContact from '../views/FriendContact';
+import ResetPassword from '../views/ResetPassword';
 
 import rootReducer from '../reducer/rootReducer';
 const createStoreWithMiddlewares = applyMiddleware(thunk)(createStore);
@@ -27,6 +28,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRedirect to="/user" />
                 <Route path="/user" component={UserinfoForm} />
+                <Route path="/resetpassword" component={ResetPassword} />
                 <Route path="/website">
                     <Route path="/website/add" component={WebsiteAddForm} />
                     <Route path="/website/list" component={WebsiteList} />
